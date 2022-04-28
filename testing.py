@@ -1,16 +1,18 @@
 # grid_layout.py
-import random
 import tkinter as tk
+import random
 
 class Root(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.title('Grid Layout')
+        self.title('Nonogram Project')
         self.geometry('400x400')
+        self.iconbitmap("@icon.xbm")
 
         self.frame = tk.Frame()
         self.frame.pack(expand=True)
+
 
         self.button = [None] * 25
         for i in range(25):
