@@ -5,7 +5,7 @@ print("Nonograms by Candidate 0367 for OCR A Level Computer Science 2022")
 print("Program written in Python using the Tkinter toolkit.")
 print("=================================================================")
 
-filename = "puzzles/heart.txt" # Relative .txt file to be loaded
+filename = "puzzles/generic.txt" # Relative .txt file to be loaded
 debug = True # NOT VISIBLE TO END USER, for development output only!
 
 # DATA STRUCTURE SECTION 1:
@@ -125,7 +125,6 @@ def toggle(event): # Event to toggle BG color when button is pressed
 def mark(event): # Event to mark the cell with an X
     button = event.widget # Passing through button to subroutine
     if button.cget("bg") == "black":
-        print("BEEP")
         button.configure(bg="white",activebackground="#f0f0f0")
         button.configure(text="X")
     elif button.cget("bg") == "white":
