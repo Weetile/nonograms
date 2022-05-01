@@ -56,13 +56,13 @@ if debug == True:
 
 hintsVertical  = []
 
-for i in range(len(nonogram[0])): # Iterating column
+for column in range(len(nonogram[0])): # Iterating column
     consecutiveCount = 0 # For every column, reset consecutiveCount to 0
     columnHints = []
-    for j in range(len(nonogram)): # Iterating number in column
-        if nonogram[j][i] == "1":
-            consecutiveCount += 1
-        elif nonogram[j][i] == "0":
+    for value in range(len(nonogram)): # Iterating number in column
+        if nonogram[value][column] == "1":
+            consecutiveCount += 1 # Consecutive count is incremented by one
+        elif nonogram[value][column] == "0":
             if int(consecutiveCount) > 0: # Test to see if > 0
                 columnHints.append(consecutiveCount) # Count is appended...
                 consecutiveCount = 0 # ...and then reset.
@@ -101,3 +101,39 @@ print("=================================================================")
 
 
 #root.mainloop()
+
+from tkinter import *
+
+root = Tk() # Initialise Tk root
+frame = Frame(root) # Base frame
+frame.grid(row=0, column=0, sticky="news")
+
+root.title('Nonograms') # Sets window title to 'Nonograms'
+root.iconbitmap("@icon.xbm") # Sets very basic window icon
+
+grid = Frame(frame) # Grid frame
+grid.grid(sticky="news", column=0, row=0, columnspan=1)
+
+def toggle(event): # Event to toggle BG color when button is pressed
+    button = event.widget # Passing through button to subroutine
+    if button.cget("bg") == "white": # If button is white...
+        button.configure(bg="black",activebackground="black") # ...set colour to black
+    elif button.cget("bg") == "black": # If button is black...
+        button.configure(text="") # ...empty text in case of mark
+        button.configure(bg="white",activebackground="white") # ... set colour to white
+    else:
+        pass
+
+for x in range(len(nonogram[0]) + hintsHorizontalMinimum): # Iterate per row...
+    for y in range(len(nonogram) + hintsVerticalMinimum): # Iterate per column...
+        button = Button(frame, bg="white") # Initialise a new button...
+        button.grid(column=x, row=y, sticky="news") # ...as part of grid
+        if x < hintsHorizontalMinimum and y < hintsVerticalMinimum:
+            button.grid_forget()
+        if x >= hintsHorizontalMinimum and y >= hintsVerticalMinimum:
+            pass # Do nothing
+        else:
+            button.configure(bg="#f0f0f0") # Set to default BG colour
+        button.bind("<Button-1>", toggle)
+
+root.mainloop()
