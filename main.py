@@ -114,7 +114,7 @@ grid.grid(sticky="news", column=0, row=0, columnspan=1)
 def toggle(event): # Event to toggle BG color when button is pressed
     button = event.widget # Passing through button to subroutine
     if button.cget("bg") == "white": # If button is white...
-        button.configure(bg="black",activebackground="black") # ...set colour to black
+        button.configure(bg="black",activebackground="#0d0d0d") # ...set colour to black
     elif button.cget("bg") == "black": # If button is black...
         button.configure(text="") # ...empty text in case of mark
         button.configure(bg="white",activebackground="#f0f0f0") # ... set colour to white
