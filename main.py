@@ -1,3 +1,5 @@
+from tkinter import *
+from tkinter import messagebox
 print("=================================================================")
 print("Nonograms by Candidate 0367 for OCR A Level Computer Science 2022")
 print("Program written in Python using the Tkinter toolkit.")
@@ -17,6 +19,11 @@ with open(filename) as file_in:
 if debug == True:
     print("Nonogram data file = " + filename + "\n") # Debug: prints relative data file
     print("Nonogram data structure = " + str(nonogram) + "\n") # Debug: prints the actual data structure array
+
+# Basic validation to make sure the nonogram has a minimum size of 2x2
+if (len(nonogram) < 2 or len(nonogram[0]) < 2):
+    messagebox.showerror("Puzzle size error","Nonogram must have a minimum size of 2x2.\nThe loaded nonogram '" + filename + "' has a size of " + str(len(nonogram[0])) + "x" + str(len(nonogram)) + ".")
+    quit()
 
 # STRUCTURE SECTION 2: 
 # Algorithm below is to generate the horizontal key/hints for the current puzzle
@@ -94,8 +101,6 @@ print("=================================================================")
 # STRUCTURE SECTION 3:
 # Graphical user interface in Tkinter
 
-from tkinter import *
-
 root = Tk() # Initialise Tk root
 frame = Frame(root) # Base frame
 frame.grid(row=0, column=0, sticky="news")
@@ -112,7 +117,7 @@ def toggle(event): # Event to toggle BG color when button is pressed
         button.configure(bg="black",activebackground="black") # ...set colour to black
     elif button.cget("bg") == "black": # If button is black...
         button.configure(text="") # ...empty text in case of mark
-        button.configure(bg="white",activebackground="lightgrey") # ... set colour to white
+        button.configure(bg="white",activebackground="#f0f0f0") # ... set colour to white
     else:
         pass
 
@@ -123,9 +128,20 @@ for x in range(len(nonogram[0]) + hintsHorizontalMinimum): # Iterate per row...
         if x < hintsHorizontalMinimum and y < hintsVerticalMinimum:
             button.grid_forget()
         if x >= hintsHorizontalMinimum and y >= hintsVerticalMinimum:
-            pass # Do nothing
+            pass # Do nothing       
         else:
             button.configure(bg="#f0f0f0") # Set to default BG colour
-        button.bind("<Button-1>", toggle)
+
+        if x < hintsHorizontalMinimum: # Selecting JUST the horizontal hints...
+            if (hintsHorizontalMinimum-x-1 < len(hintsHorizontal[y-hintsVerticalMinimum])): # Only applying if in range
+                button.configure(text=hintsHorizontal[y-hintsVerticalMinimum][hintsHorizontalMinimum-x-1]) # Setting the text to the correct hint
+            else: # If there is no text to set,
+                button.grid_forget() # remove the horizontal button.
+        if y < hintsVerticalMinimum: # Selecting JUST the vertical hints...
+            if (hintsVerticalMinimum-y-1 < len(hintsVertical[x-hintsHorizontalMinimum])): # Only applying if in range
+                button.configure(text=hintsVertical[x-hintsHorizontalMinimum][hintsVerticalMinimum-y-1]) # Setting the text to the correct hint
+            else: # If there is no text to set,
+                button.grid_forget() # remove the vertical button.
+        button.bind("<Button-1>", toggle) # When the left mouse is clicked, call the toggle function
 
 root.mainloop()
