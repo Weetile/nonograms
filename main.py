@@ -146,7 +146,8 @@ for x in range(len(nonogram[0]) + hintsHorizontalMinimum): # Iterate per row...
 
         if x < hintsHorizontalMinimum: # Selecting JUST the horizontal hints...
             if (hintsHorizontalMinimum-x-1 < len(hintsHorizontal[y-hintsVerticalMinimum])): # Only applying if in range
-                button.configure(text=hintsHorizontal[y-hintsVerticalMinimum][hintsHorizontalMinimum-x-1]) # Setting the text to the correct hint
+                #button.configure(text=hintsHorizontal[y-hintsVerticalMinimum][hintsHorizontalMinimum-x-1]) # Setting the text to the correct hint
+                button.configure(text=hintsHorizontal[y-hintsVerticalMinimum][x-hintsHorizontalMinimum]) # Setting the text to the correct hint
             else: # If there is no text to set,
                 if (hintsHorizontalMinimum-x-1 > 0): # If it is not the only button on that row,
                     button.grid_forget() # remove the horizontal button.
@@ -154,7 +155,7 @@ for x in range(len(nonogram[0]) + hintsHorizontalMinimum): # Iterate per row...
                     button.configure(text="0") # Set to 0 otherwise
         if y < hintsVerticalMinimum: # Selecting JUST the vertical hints...
             if (hintsVerticalMinimum-y-1 < len(hintsVertical[x-hintsHorizontalMinimum])): # Only applying if in range
-                button.configure(text=hintsVertical[x-hintsHorizontalMinimum][hintsVerticalMinimum-y-1]) # Setting the text to the correct hint
+                button.configure(text=hintsVertical[x-hintsHorizontalMinimum][y-hintsVerticalMinimum]) # Setting the text to the correct hint
             else: # If there is no text to set,
                 if (hintsVerticalMinimum-y-1 > 0): # If it is not the only button on that column,
                     button.grid_forget() # remove the vertical button.
