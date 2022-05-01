@@ -5,7 +5,7 @@ print("Nonograms by Candidate 0367 for OCR A Level Computer Science 2022")
 print("Program written in Python using the Tkinter toolkit.")
 print("=================================================================")
 
-filename = "puzzles/smiley.txt" # Relative .txt file to be loaded
+filename = "puzzles/heart.txt" # Relative .txt file to be loaded
 debug = True # NOT VISIBLE TO END USER, for development output only!
 
 # DATA STRUCTURE SECTION 1:
@@ -114,12 +114,25 @@ grid.grid(sticky="news", column=0, row=0, columnspan=1)
 def toggle(event): # Event to toggle BG color when button is pressed
     button = event.widget # Passing through button to subroutine
     if button.cget("bg") == "white": # If button is white...
+        button.configure(text="") # ...empty text in case of mark
         button.configure(bg="black",activebackground="#0d0d0d") # ...set colour to black
     elif button.cget("bg") == "black": # If button is black...
-        button.configure(text="") # ...empty text in case of mark
+
         button.configure(bg="white",activebackground="#f0f0f0") # ... set colour to white
     else:
         pass
+
+def mark(event): # Event to mark the cell with an X
+    button = event.widget # Passing through button to subroutine
+    if button.cget("bg") == "black":
+        print("BEEP")
+        button.configure(bg="white",activebackground="#f0f0f0")
+        button.configure(text="X")
+    elif button.cget("bg") == "white":
+        if button.cget("text") == "X":
+            button.configure(text="")
+        else:
+            button.configure(text="X")
 
 for x in range(len(nonogram[0]) + hintsHorizontalMinimum): # Iterate per row...
     for y in range(len(nonogram) + hintsVerticalMinimum): # Iterate per column...
@@ -149,6 +162,7 @@ for x in range(len(nonogram[0]) + hintsHorizontalMinimum): # Iterate per row...
                 else:
                     button.configure(text="0") # Set to 0 otherwise
             
-        button.bind("<Button-1>", toggle) # When the left mouse is clicked, call the toggle function
+        button.bind("<Button-1>", toggle) # When the left mouse button is pressed, call the toggle function
+        button.bind("<Button-3>", mark) # When the right mouse button is pressed, call the mark function
 
 root.mainloop()
