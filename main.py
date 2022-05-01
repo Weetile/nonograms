@@ -5,7 +5,7 @@ print("Nonograms by Candidate 0367 for OCR A Level Computer Science 2022")
 print("Program written in Python using the Tkinter toolkit.")
 print("=================================================================")
 
-filename = "puzzles/heart.txt" # Relative .txt file to be loaded
+filename = "puzzles/smiley.txt" # Relative .txt file to be loaded
 debug = True # NOT VISIBLE TO END USER, for development output only!
 
 # DATA STRUCTURE SECTION 1:
@@ -136,12 +136,19 @@ for x in range(len(nonogram[0]) + hintsHorizontalMinimum): # Iterate per row...
             if (hintsHorizontalMinimum-x-1 < len(hintsHorizontal[y-hintsVerticalMinimum])): # Only applying if in range
                 button.configure(text=hintsHorizontal[y-hintsVerticalMinimum][hintsHorizontalMinimum-x-1]) # Setting the text to the correct hint
             else: # If there is no text to set,
-                button.grid_forget() # remove the horizontal button.
+                if (hintsHorizontalMinimum-x-1 > 0): # If it is not the only button on that row,
+                    button.grid_forget() # remove the horizontal button.
+                else:
+                    button.configure(text="0") # Set to 0 otherwise
         if y < hintsVerticalMinimum: # Selecting JUST the vertical hints...
             if (hintsVerticalMinimum-y-1 < len(hintsVertical[x-hintsHorizontalMinimum])): # Only applying if in range
                 button.configure(text=hintsVertical[x-hintsHorizontalMinimum][hintsVerticalMinimum-y-1]) # Setting the text to the correct hint
             else: # If there is no text to set,
-                button.grid_forget() # remove the vertical button.
+                if (hintsVerticalMinimum-y-1 > 0): # If it is not the only button on that column,
+                    button.grid_forget() # remove the vertical button.
+                else:
+                    button.configure(text="0") # Set to 0 otherwise
+            
         button.bind("<Button-1>", toggle) # When the left mouse is clicked, call the toggle function
 
 root.mainloop()
