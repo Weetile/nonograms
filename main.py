@@ -14,8 +14,8 @@ with open(filename) as file_in:
         nonogram.append(line.rstrip('\n')) # Calls rstrip function to remove linebreaks and /n
 
 if debug == True:
-    print("Nonogram data file = " + filename) # Debug: prints relative data file
-    print("Nonogram data structure = " + str(nonogram)) # Debug: prints the actual data structure array
+    print("Nonogram data file = " + filename + "\n") # Debug: prints relative data file
+    print("Nonogram data structure = " + str(nonogram) + "\n") # Debug: prints the actual data structure array
 
 # STRUCTURE SECTION 2: 
 # Algorithm below is to generate the horizontal key/hints for the current puzzle
@@ -49,7 +49,7 @@ for row in hintsHorizontal:
         hintsHorizontalMinimum = count
 
 if debug == True:
-    print("hintsHorizontalMinimum = " + str(hintsHorizontalMinimum)) # For debugging/output purposes
+    print("hintsHorizontalMinimum = " + str(hintsHorizontalMinimum) + "\n") # For debugging/output purposes
 
 # STRUCTURE SECTION 3:
 # Algorithm below is to generate the vertical key/hints for the current puzzle
@@ -84,7 +84,11 @@ for column in hintsVertical:
         hintsVerticalMinimum = count
 
 if debug == True:
-    print("hintsVerticalMinimum = " + str(hintsVerticalMinimum)) # For debugging/output purposes
+    print("hintsVerticalMinimum = " + str(hintsVerticalMinimum) + "\n") # For debugging/output purposes
+
+print("=================================================================")
+print("DEBUG END")
+print("=================================================================")
 
 # STRUCTURE SECTION 3:
 # Graphical user interface in Tkinter
