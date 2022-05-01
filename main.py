@@ -1,8 +1,9 @@
 print("=================================================================")
 print("Nonograms by Candidate 0367 for OCR A Level Computer Science 2022")
+print("Program written in Python using the Tkinter toolkit.")
 print("=================================================================")
 
-filename = "puzzles/pixels.txt" # Relative .txt file to be loaded
+filename = "puzzles/heart.txt" # Relative .txt file to be loaded
 debug = True # NOT VISIBLE TO END USER, for development output only!
 
 # DATA STRUCTURE SECTION 1:
@@ -92,15 +93,6 @@ print("=================================================================")
 
 # STRUCTURE SECTION 3:
 # Graphical user interface in Tkinter
-#from tkinter import *
-#root = Tk()
-
-# Title label widget
-#title = Label(root, text="Nonogram Project for OCR Computer Science")
-#title.pack()
-
-
-#root.mainloop()
 
 from tkinter import *
 
@@ -120,13 +112,13 @@ def toggle(event): # Event to toggle BG color when button is pressed
         button.configure(bg="black",activebackground="black") # ...set colour to black
     elif button.cget("bg") == "black": # If button is black...
         button.configure(text="") # ...empty text in case of mark
-        button.configure(bg="white",activebackground="white") # ... set colour to white
+        button.configure(bg="white",activebackground="lightgrey") # ... set colour to white
     else:
         pass
 
 for x in range(len(nonogram[0]) + hintsHorizontalMinimum): # Iterate per row...
     for y in range(len(nonogram) + hintsVerticalMinimum): # Iterate per column...
-        button = Button(frame, bg="white") # Initialise a new button...
+        button = Button(frame, width="2",height="2", bg="white") # Initialise a new button...
         button.grid(column=x, row=y, sticky="news") # ...as part of grid
         if x < hintsHorizontalMinimum and y < hintsVerticalMinimum:
             button.grid_forget()
