@@ -1,11 +1,13 @@
-from tkinter import *
-from tkinter import messagebox
+from tkinter import * # CORE to the program, GUI toolkit
+from tkinter import messagebox # For displaying message boxes and erorrs
+import time # For printing time taken to solve the puzzle
+
 print("=================================================================")
 print("Nonograms by Candidate 0367 for OCR A Level Computer Science 2022")
 print("Program written in Python using the Tkinter toolkit.")
 print("=================================================================")
 
-filename = "puzzles/heart.txt" # Relative .txt file to be loaded
+filename = "puzzles/generic.txt" # Relative .txt file to be loaded
 debug = True # NOT VISIBLE TO END USER, for development output only!
 
 # DATA STRUCTURE SECTION 1:
@@ -94,9 +96,10 @@ for column in hintsVertical:
 if debug == True:
     print("hintsVerticalMinimum = " + str(hintsVerticalMinimum) + "\n") # For debugging/output purposes
 
-print("=================================================================")
-print("DEBUG END")
-print("=================================================================")
+if debug == True:
+    print("=================================================================")
+    print("DEBUG END")
+    print("=================================================================")
 
 # STRUCTURE SECTION 4:
 # Graphical user interface in Tkinter
@@ -122,7 +125,7 @@ puzzleText.grid(row=0,column=0)
 #elapsedTime.grid(row=3)
 
 
-def toggle(event): # Event to toggle BG color when button is pressed
+def toggle(event): # LEFT CLICK - Event to toggle BG color when button is pressed
     button = event.widget # Passing through button to subroutine
     if button.cget("bg") == "white": # If button is white...
         button.configure(text="") # ...empty text in case of mark
@@ -133,7 +136,7 @@ def toggle(event): # Event to toggle BG color when button is pressed
     else:
         pass
 
-def mark(event): # Event to mark the cell with an X
+def mark(event): # RIGHT CLICK - Event to mark the cell with an X
     button = event.widget # Passing through button to subroutine
     if button.cget("bg") == "black":
         button.configure(bg="white",activebackground="#f0f0f0")
@@ -144,8 +147,47 @@ def mark(event): # Event to mark the cell with an X
         else:
             button.configure(text="X")
 
-def verify():
-    print(button.cget("bg"))
+def checkLists(list1,list2): # Used in the verification process
+    if len(list1) != len(list2): # If different vertical size...
+        print("Error! Vertical size different.")
+        return False # Return False
+    elif len(list1[0]) != len(list2[0]): # If different horizontal size...
+        print("Error! Horizontal size different.")
+        return False # Return True
+    else:
+        match = True
+        for row in range(len(list1)):
+            for column in range(len(list1[0])):
+                if list1[row][column] != list2[row][column]:
+                    match = False
+        if match == False:
+            return False
+        else:
+            return True
+
+endTimes = []
+
+def verify(): # After the user presses the 'Verify' button
+    solutionArray = [] # Blank master array for the users solution
+    for y in range(len(buttonArray[0])): # Iterate through columns...
+        solutionRow = "" # Define blank temporary row variable
+        for x in range(len(buttonArray)): # For horizontal length of buttons
+            if buttonArray[x][y].cget("bg") == "black": # If BG colour is black...
+                solutionRow = solutionRow + "1" # Append a 1 to row
+            else: # Otherwise...
+                solutionRow = solutionRow + "0" # Append a 0 to row
+        solutionArray.append(solutionRow) # After every row, append the row to the master array
+    if debug == True:
+        print("Original array:")
+        print(nonogram) # Original array
+        print("User solution:")
+        print(solutionArray) # For debugging/output purposes
+        print(checkLists(nonogram,solutionArray))
+    if checkLists(nonogram,solutionArray) == True:
+        endTimes.append(time.time())
+        messagebox.showinfo(title="Success", message="Nonogram puzzle matches!\nCongratulations on solving the nonogram puzzle. Your time was " + str(endTimes[0] - startTime)[:4] + " seconds.")
+    else:
+        messagebox.showwarning(title="Failed", message="The inputted nonogram does not match the final solution.")
 
 verifyButton = Button(frame,text="Verify",command=verify)
 verifyButton.grid(row=4,column=1,padx=(10,10),pady=(10,10))
@@ -154,15 +196,21 @@ verifyButton.grid(row=4,column=1,padx=(10,10),pady=(10,10))
 # We are iterating through horizontally the length of the nonogram puzzle + the hints.
 # We are iterating through vertically the height of the nonogram puzzle + the hints.
 # We are defining a button for every single cell of the nonogram puzzle and every hint.
-# 
+#
+startTime = time.time()
+buttonArray = []
 
 for x in range(len(nonogram[0]) + hintsHorizontalMinimum): # Iterate per row...
+    rowButtonArray = []
     for y in range(len(nonogram) + hintsVerticalMinimum): # Iterate per column...
         button = Button(grid, width="2",height="2", bg="white") # Initialise a new button...
         button.grid(column=x, row=y) # ...as part of grid
+        
         if x < hintsHorizontalMinimum and y < hintsVerticalMinimum: # If the button is in the top left corner (redundant)...
             button.grid_forget() # Forget the buttons on the grid
-        if x >= hintsHorizontalMinimum and y >= hintsVerticalMinimum:
+            
+        if x >= hintsHorizontalMinimum and y >= hintsVerticalMinimum: # Cells for user to interact with
+            rowButtonArray.append(button)
             pass # Do nothing, this section of code was useful for debugging purposes
         else:
             button.configure(bg="#f0f0f0") # Set to default BG colour
@@ -187,5 +235,7 @@ for x in range(len(nonogram[0]) + hintsHorizontalMinimum): # Iterate per row...
             
         button.bind("<Button-1>", toggle) # When the left mouse button is pressed, call the toggle function
         button.bind("<Button-3>", mark) # When the right mouse button is pressed, call the mark function
+    if x >= hintsHorizontalMinimum:
+        buttonArray.append(rowButtonArray)
 
 root.mainloop()
