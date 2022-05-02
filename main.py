@@ -5,7 +5,7 @@ print("Nonograms by Candidate 0367 for OCR A Level Computer Science 2022")
 print("Program written in Python using the Tkinter toolkit.")
 print("=================================================================")
 
-filename = "puzzles/generic.txt" # Relative .txt file to be loaded
+filename = "puzzles/heart.txt" # Relative .txt file to be loaded
 debug = True # NOT VISIBLE TO END USER, for development output only!
 
 # DATA STRUCTURE SECTION 1:
@@ -98,7 +98,7 @@ print("=================================================================")
 print("DEBUG END")
 print("=================================================================")
 
-# STRUCTURE SECTION 3:
+# STRUCTURE SECTION 4:
 # Graphical user interface in Tkinter
 
 root = Tk() # Initialise Tk root
