@@ -118,11 +118,9 @@ puzzleText.grid(row=0,column=0)
 #puzzleText2 = Label(frame, text=filename, font=('TkDefaultFont', 10, 'bold'))
 #puzzleText2.grid(row=0,column=1,columnspan=2)
 
-elapsedTime = Label(frame, text="Time: ")
-elapsedTime.grid(row=3)
+#elapsedTime = Label(frame, text="Time: ")
+#elapsedTime.grid(row=3)
 
-verifyButton = Button(frame,text="Verify")
-verifyButton.grid(row=4,column=1,padx=(10,10),pady=(10,10))
 
 def toggle(event): # Event to toggle BG color when button is pressed
     button = event.widget # Passing through button to subroutine
@@ -146,6 +144,12 @@ def mark(event): # Event to mark the cell with an X
         else:
             button.configure(text="X")
 
+def verify():
+    print(button.cget("bg"))
+
+verifyButton = Button(frame,text="Verify",command=verify)
+verifyButton.grid(row=4,column=1,padx=(10,10),pady=(10,10))
+
 # This below section of code has the following purposes:
 # We are iterating through horizontally the length of the nonogram puzzle + the hints.
 # We are iterating through vertically the height of the nonogram puzzle + the hints.
@@ -155,7 +159,7 @@ def mark(event): # Event to mark the cell with an X
 for x in range(len(nonogram[0]) + hintsHorizontalMinimum): # Iterate per row...
     for y in range(len(nonogram) + hintsVerticalMinimum): # Iterate per column...
         button = Button(grid, width="2",height="2", bg="white") # Initialise a new button...
-        button.grid(column=x, row=y, sticky="news") # ...as part of grid
+        button.grid(column=x, row=y) # ...as part of grid
         if x < hintsHorizontalMinimum and y < hintsVerticalMinimum: # If the button is in the top left corner (redundant)...
             button.grid_forget() # Forget the buttons on the grid
         if x >= hintsHorizontalMinimum and y >= hintsVerticalMinimum:
