@@ -1,13 +1,14 @@
 from tkinter import * # CORE to the program, GUI toolkit
 from tkinter import messagebox # For displaying message boxes and erorrs
 import time # For printing time taken to solve the puzzle
+import nonogramdialog
 
 print("=================================================================")
 print("Nonograms by Candidate 0367 for OCR A Level Computer Science 2022")
 print("Program written in Python using the Tkinter toolkit.")
 print("=================================================================")
 
-filename = "puzzles/generic.txt" # Relative .txt file to be loaded
+filename = nonogramdialog.filename # Relative .txt file to be loaded
 debug = True # NOT VISIBLE TO END USER, for development output only!
 
 # DATA STRUCTURE SECTION 1:
@@ -109,7 +110,7 @@ frame = Frame(root) # Base frame
 frame.grid(row=0, column=0, sticky="news")
 
 root.title('Nonograms') # Sets window title to 'Nonograms'
-root.iconbitmap("@icon.xbm") # Sets very basic window icon
+root.iconbitmap("@icon.xbm") # Sets basic window icon
 
 
 
