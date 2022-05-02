@@ -133,14 +133,20 @@ def mark(event): # Event to mark the cell with an X
         else:
             button.configure(text="X")
 
+# This below section of code has the following purposes:
+# We are iterating through horizontally the length of the nonogram puzzle + the hints.
+# We are iterating through vertically the height of the nonogram puzzle + the hints.
+# We are defining a button for every single cell of the nonogram puzzle and every hint.
+# 
+
 for x in range(len(nonogram[0]) + hintsHorizontalMinimum): # Iterate per row...
     for y in range(len(nonogram) + hintsVerticalMinimum): # Iterate per column...
         button = Button(frame, width="2",height="2", bg="white") # Initialise a new button...
         button.grid(column=x, row=y, sticky="news") # ...as part of grid
-        if x < hintsHorizontalMinimum and y < hintsVerticalMinimum:
-            button.grid_forget()
+        if x < hintsHorizontalMinimum and y < hintsVerticalMinimum: # If the button is in the top left corner (redundant)...
+            button.grid_forget() # Forget the buttons on the grid
         if x >= hintsHorizontalMinimum and y >= hintsVerticalMinimum:
-            pass # Do nothing       
+            pass # Do nothing, this section of code was useful for debugging purposes
         else:
             button.configure(bg="#f0f0f0") # Set to default BG colour
 
