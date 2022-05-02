@@ -6,7 +6,7 @@ print("Program written in Python using the Tkinter toolkit.")
 print("=================================================================")
 
 filename = "puzzles/heart.txt" # Relative .txt file to be loaded
-debug = True # NOT VISIBLE TO END USER, for development output only!
+debug = False # NOT VISIBLE TO END USER, for development output only!
 
 # DATA STRUCTURE SECTION 1:
 # Basic input of the nonogram text file into an array
@@ -108,21 +108,11 @@ frame.grid(row=0, column=0, sticky="news")
 root.title('Nonograms') # Sets window title to 'Nonograms'
 root.iconbitmap("@icon.xbm") # Sets very basic window icon
 
-
-
 grid = Frame(frame) # Grid frame
-grid.grid(sticky="news", column=0, row=2, columnspan=1, padx=(10,10),pady=(10,10))
+grid.grid(sticky="news", column=0, row=1)
 
-puzzleText = Label(frame, text="Puzzle: " + filename)
-puzzleText.grid(row=0,column=0)
-#puzzleText2 = Label(frame, text=filename, font=('TkDefaultFont', 10, 'bold'))
-#puzzleText2.grid(row=0,column=1,columnspan=2)
-
-elapsedTime = Label(frame, text="Time: ")
-elapsedTime.grid(row=3)
-
-verifyButton = Button(frame,text="Verify")
-verifyButton.grid(row=4,column=1,padx=(10,10),pady=(10,10))
+label = Label(frame, text="test")
+label.grid(row=0)
 
 def toggle(event): # Event to toggle BG color when button is pressed
     button = event.widget # Passing through button to subroutine
@@ -150,7 +140,7 @@ def mark(event): # Event to mark the cell with an X
 # We are iterating through horizontally the length of the nonogram puzzle + the hints.
 # We are iterating through vertically the height of the nonogram puzzle + the hints.
 # We are defining a button for every single cell of the nonogram puzzle and every hint.
-# 
+# The unnecessary buttons are removed from the grid.
 
 for x in range(len(nonogram[0]) + hintsHorizontalMinimum): # Iterate per row...
     for y in range(len(nonogram) + hintsVerticalMinimum): # Iterate per column...
