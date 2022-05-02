@@ -27,6 +27,9 @@ if filename != "create":
         print("Nonogram data structure = " + str(nonogram) + "\n") # Debug: prints the actual data structure array
 
     # Basic validation to make sure the nonogram has a minimum size of 2x2
+    if (len(nonogram) == 0):
+        messagebox.showerror("Puzzle size error","Nonogram must have a minimum size of 2x2.\nThe loaded nonogram '" + filename + "' has a size of 0." )
+        quit()
     if (len(nonogram) < 2 or len(nonogram[0]) < 2):
         messagebox.showerror("Puzzle size error","Nonogram must have a minimum size of 2x2.\nThe loaded nonogram '" + filename + "' has a size of " + str(len(nonogram[0])) + "x" + str(len(nonogram)) + ".")
         quit()
@@ -303,6 +306,9 @@ elif filename == "create":
                 textfile.write(element + "\n")
             textfile.close()
             messagebox.showerror(title="Success",message="Nonogram has been written to " + nonogramName + ".") # Displaying success info
+
+    createText = Label(frame, text="Nonogram Creation")
+    createText.grid(row=0,padx=(10,10),pady=(10,10))
 
     saveButton = Button(frame,text="Save",command=save)
     saveButton.grid(row=4,column=1,padx=(10,10),pady=(10,10))
