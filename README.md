@@ -21,3 +21,7 @@ Clone the repository to the local disk or download it as a '.zip'. Be sure to pr
 ## License
 
 [GPL (GNU GENERAL PUBLIC LICENSE Version 3)](https://www.gnu.org/licenses/gpl-3.0.txt)
+
+## Screenshots
+
+![image](https://github.com/Weetile/nonograms/assets/7700383/6e41c7d2-c2d5-4922-9c69-cb9873c4ed38)
